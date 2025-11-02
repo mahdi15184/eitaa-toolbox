@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سازنده دکمه شیشه‌ای</title>
+    <style>
+        @font-face {
+            font-family: "Vazir";
+            src: url("https://sgtmarket.ir/Vazir-Regular.ttf");
+        }
+        
+        :root {
+            --primary-orange: #FF9800;
+            --light-orange: #FFE0B2;
+            --dark-orange: #F57C00;
+            --white: #FFFFFF;
+            --light-bg: #FAFAFA;
+            --dark-bg: #121212;
+            --dark-card: #1E1E1E;
+            --text-light: #424242;
+            --text-dark: #E0E0E0;
+            --gray: #F5F5F5;
+            --dark-gray: #424242;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "Vazir";
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            background: var(--light-bg);
+            color: var(--text-light);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        body.dark-mode {
+            background: var(--dark-bg);
+            color: var(--text-dark);
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            margin: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .dark-mode .container {
+            background-color: var(--dark-card);
+        }
+        
+        h1 {
+            color: var(--primary-orange);
+            margin-bottom: 30px;
+            font-size: 2.2rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 25%;
+            width: 50%;
+            height: 4px;
+            background-color: var(--primary-orange);
+            border-radius: 2px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+            text-align: right;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--primary-orange);
+        }
+        
+        input, select, button, textarea {
+            border-radius: 10px;
+            border: 2px solid var(--light-orange);
+            padding: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: var(--white);
+            color: var(--text-light);
+            width: 100%;
+        }
+        
+        .dark-mode input, 
+        .dark-mode select, 
+        .dark-mode button, 
+        .dark-mode textarea {
+            background-color: var(--dark-card);
+            color: var(--text-dark);
+            border-color: #333;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-orange);
+            box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.3);
+        }
+        
+        button {
+            background-color: var(--primary-orange);
+            color: var(--white);
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            background-color: var(--dark-orange);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .radio-option {
+            display: flex;
+            align-items: center;
+            margin-left: 15px;
+        }
+        
+        .radio-option input {
+            width: auto;
+            margin-left: 5px;
+        }
+        
+        .result-area {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 15px;
+            background-color: var(--light-orange);
+            transition: all 0.3s ease;
+        }
+        
+        .dark-mode .result-area {
+            background-color: #333;
+        }
+        
+        textarea {
+            height: 100px;
+            resize: vertical;
+            direction: ltr;
+            background-color: var(--gray);
+            font-family: monospace;
+        }
+        
+        .dark-mode textarea {
+            background-color: #2a2a2a;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .button-group button {
+            flex: 1;
+        }
+        
+        footer {
+            margin-top: 40px;
+            font-size: 1rem;
+            color: var(--dark-gray);
+            opacity: 0.8;
+        }
+        
+        .dark-mode footer {
+            color: var(--text-dark);
+        }
+        
+        /* دکمه تغییر تم */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--primary-orange);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+        
+        .theme-toggle i {
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        /* دکمه بازگشت */
+        .back-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-orange);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+        }
+        
+        .back-button:hover {
+            transform: scale(1.1);
+        }
+        
+        /* استایل توست */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--dark-gray);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .toast.show {   
+            opacity: 1;
+        }
+
+        .footera {
+            text-decoration: none;
+            color: #F57C00;
+        }
+        
+        /* رسپانسیو */
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            input, select, button, textarea {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+            
+            .theme-toggle, .back-button {
+                width: 45px;
+                height: 45px;
+            }
+            
+            .radio-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+    
+    <!-- آیکون‌های فونت آوسام -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <button class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+    </button>
+    
+    <a href="/" class="back-button">
+        <i class="fas fa-home"></i>
+    </a>
+
+    <div class="container">
+        <h1>سازنده دکمه شیشه‌ای</h1>
+        
+        <div class="form-group">
+            <label>نوع لینک:</label>
+            <div class="radio-group">
+                <label class="radio-option">
+                    <input type="radio" name="link_type" value="app" checked>
+                    برنامک
+                </label>
+                <label class="radio-option">
+                    <input type="radio" name="link_type" value="public">
+                    کانال عمومی
+                </label>
+                <label class="radio-option">
+                    <input type="radio" name="link_type" value="post">
+                    پست
+                </label>
+                <label class="radio-option">
+                    <input type="radio" name="link_type" value="private">
+                    لینک خصوصی
+                </label>
+            </div>
+        </div>
+        
+        <div id="input-fields">
+            <!-- فیلدهای ورودی بر اساس نوع لینک در اینجا نمایش داده می‌شوند -->
+        </div>
+        
+        <div class="form-group">
+            <label for="button-text">متن دکمه:</label>
+            <input type="text" id="button-text" placeholder="مثال: مشاهده محصول">
+        </div>
+        
+        <button id="generate-btn">ساخت لینک</button>
+        
+        <div id="result-area" class="result-area hidden">
+            <label for="final-link">لینک نهایی:</label>
+            <textarea id="final-link" readonly></textarea>
+            <div class="button-group">
+                <button id="copy-btn">🔗 کپی لینک</button>
+                <button id="send-btn">ارسال به ایتا</button>
+            </div>
+        </div>
+        
+        <footer>
+            ساخته شده توسط کانال ایتافن <b><a class="footera" href="https://eitaa.com/eitaafan">@eitaafan</a></b>
+        </footer>
+    </div>
+
+    <div id="toast" class="toast">لینک کپی شد!</div>
+
+    <script>
+        // --- متغیرهای全局 ---
+        const fieldTemplates = {
+            app: `
+                <div class="form-group">
+                    <label for="app-id">شناسه برنامه:</label>
+                    <input type="text" id="app-id" placeholder="مثال: store_app">
+                </div>
+                <div class="form-group">
+                    <label for="miniapp-id">شناسه برنامک:</label>
+                    <input type="text" id="miniapp-id" placeholder="مثال: app">
+                </div>
+            `,
+            public: `
+                <div class="form-group">
+                    <label for="channel-id">شناسه کانال عمومی:</label>
+                    <input type="text" id="channel-id" placeholder="مثال: eitaafan">
+                </div>
+            `,
+            post: `
+                <div class="form-group">
+                    <label for="post-channel-id">شناسه کانال/گروه:</label>
+                    <input type="text" id="post-channel-id" placeholder="مثال: eitaafan">
+                </div>
+                <div class="form-group">
+                    <label for="post-id">شماره پست:</label>
+                    <input type="number" id="post-id" placeholder="مثال: 17586">
+                </div>
+            `,
+            private: `
+                <div class="form-group">
+                    <label for="private-link">لینک کامل خصوصی:</label>
+                    <input type="url" id="private-link" placeholder="https://eitaafan.ir/">
+                </div>
+            `
+        };
+
+        // --- توابع عمومی ---
+        function showMessage(text, isError = false) {
+            const toast = document.getElementById('toast');
+            toast.textContent = text;
+            toast.style.backgroundColor = isError ? '#ff3b30' : 'var(--primary-orange)';
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // --- مدیریت نمایش فیلدهای ورودی ---
+        function updateInputFields(type) {
+            const inputFieldsContainer = document.getElementById('input-fields');
+            inputFieldsContainer.innerHTML = fieldTemplates[type];
+            
+            // مخفی کردن نتیجه قبلی
+            document.getElementById('result-area').classList.add('hidden');
+        }
+
+        // --- تولید لینک نهایی ---
+        function generateLink() {
+            try {
+                const selectedType = document.querySelector('input[name="link_type"]:checked').value;
+                const buttonText = document.getElementById('button-text').value.trim().replace(/ /g, '.'); 
+                
+                if (!buttonText) throw new Error('متن دکمه الزامی است.');
+
+                let baseUrl = '';
+
+                switch (selectedType) {
+                    case 'app':
+                        const appId = document.getElementById('app-id').value.trim();
+                        const miniappId = document.getElementById('miniapp-id').value.trim();
+                        if (!appId || !miniappId) throw new Error('شناسه‌های برنامه و برنامک الزامی هستند.');
+                        baseUrl = `https://eitaa.com/${appId}/${miniappId}`;
+                        break;
+                    case 'public':
+                        const channelId = document.getElementById('channel-id').value.trim();
+                        if (!channelId) throw new Error('شناسه کانال الزامی است.');
+                        baseUrl = `https://eitaa.com/${channelId}?_app`;
+                        break;
+                    case 'post':
+                        const postChannelId = document.getElementById('post-channel-id').value.trim();
+                        const postId = document.getElementById('post-id').value.trim();
+                        if (!postChannelId || !postId) throw new Error('شناسه کانال و شماره پست الزامی هستند.');
+                        baseUrl = `https://eitaa.com/${postChannelId}/${postId}?_app`;
+                        break;
+                    case 'private':
+                        baseUrl = document.getElementById('private-link').value.trim();
+                        if (!baseUrl) throw new Error('لینک خصوصی الزامی است.');
+                        baseUrl = baseUrl.split('?')[0];
+                        baseUrl += '?_app'; 
+                        break;
+                }
+                
+                const finalLink = `${baseUrl}?btn=${buttonText}`;
+                
+                document.getElementById('final-link').value = finalLink;
+                document.getElementById('result-area').classList.remove('hidden');
+                showMessage('لینک با موفقیت ساخته شد!');
+            } catch (e) {
+                showMessage(e.message, true);
+            }
+        }
+
+        // --- کپی لینک ---
+        function copyLink() {
+            const finalLinkInput = document.getElementById('final-link');
+            finalLinkInput.select();
+            
+            navigator.clipboard.writeText(finalLinkInput.value).then(() => {
+                showMessage('لینک با موفقیت کپی شد!');
+            }).catch(err => {
+                console.error('خطا در کپی کردن: ', err);
+                // روش جایگزین برای مرورگرهای قدیمی
+                document.execCommand('copy');
+                showMessage('لینک کپی شد!');
+            });
+        }
+
+        // --- ارسال به ایتا ---
+        function sendToEitaa() {
+            const finalLink = document.getElementById('final-link').value;
+            
+            if (!finalLink) {
+                showMessage('ابتدا لینک را بسازید.', true);
+                return;
+            }
+            
+            // ساخت دیپ‌لینک ایتا
+            const deepLinkUrl = `et://open?url=${encodeURIComponent(finalLink)}`;
+            
+            // تلاش برای باز کردن در ایتا
+            window.location.href = deepLinkUrl;
+            
+            // نمایش پیام راهنما
+            showMessage('در حال باز کردن در ایتا...');
+            
+            // اگر بعد از 2 ثانیه باز نشد، نمایش پیام خطا
+            setTimeout(() => {
+                if (!document.hidden) {
+                    showMessage('اگر ایتا باز نشد، لینک را کپی کرده و دستی در ایتا استفاده کنید.');
+                }
+            }, 2000);
+        }
+
+        // --- راه‌اندازی اولیه ---
+        document.addEventListener('DOMContentLoaded', function() {
+            // تنظیم فیلدهای اولیه
+            updateInputFields('app');
+            
+            // رویداد تغییر نوع لینک
+            document.querySelectorAll('input[name="link_type"]').forEach(radio => {
+                radio.addEventListener('change', (event) => updateInputFields(event.target.value));
+            });
+            
+            // رویداد دکمه ساخت لینک
+            document.getElementById('generate-btn').addEventListener('click', generateLink);
+            
+            // رویداد دکمه کپی
+            document.getElementById('copy-btn').addEventListener('click', copyLink);
+            
+            // رویداد دکمه ارسال به ایتا
+            document.getElementById('send-btn').addEventListener('click', sendToEitaa);
+            
+            // مدیریت تم
+            const themeToggle = document.getElementById('themeToggle');
+            const body = document.body;
+            const icon = themeToggle.querySelector('i');
+            
+            // بررسی تم اولیه سیستم
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                body.classList.add('dark-mode');
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+            
+            themeToggle.addEventListener('click', function() {
+                body.classList.toggle('dark-mode');
+                
+                if (body.classList.contains('dark-mode')) {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                } else {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                }
+            });
+            
+            // تغییر خودکار تم با تغییر سیستم
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                if (e.matches) {
+                    body.classList.add('dark-mode');
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                } else {
+                    body.classList.remove('dark-mode');
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

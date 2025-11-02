@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>منوی اصلی - ابزارهای کاربردی</title>
+  <style>
+    @font-face {
+        font-family: "Vazir";
+        src: url("https://sgtmarket.ir/Vazir-Regular.ttf");
+    }
+    :root {
+      --primary-orange: #FF9800;
+      --light-orange: #FFE0B2;
+      --dark-orange: #F57C00;
+      --white: #FFFFFF;
+      --light-bg: #FAFAFA;
+      --dark-bg: #121212;
+      --dark-card: #1E1E1E;
+      --text-light: #424242;
+      --text-dark: #E0E0E0;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Vazir";
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--light-bg);
+      color: var(--text-light);
+      min-height: 100vh;
+      transition: all 0.3s ease;
+    }
+    
+    body.dark-mode {
+      background: var(--dark-bg);
+      color: var(--text-dark);
+    }
+    
+    .container {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      width: 100%;
+    }
+    
+    h1 {
+      color: var(--primary-orange);
+      margin-bottom: 10px;
+      font-size: 2.5rem;
+      position: relative;
+      display: inline-block;
+    }
+    
+    h1::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 25%;
+      width: 50%;
+      height: 4px;
+      background-color: var(--primary-orange);
+      border-radius: 2px;
+    }
+    
+    .subtitle {
+      font-size: 1.2rem;
+      opacity: 0.8;
+      margin-top: 20px;
+    }
+    
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    .menu-item {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px 20px;
+      text-align: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 180px;
+      text-decoration: none;
+      color: inherit;
+    }
+    
+    .dark-mode .menu-item {
+      background: rgba(30, 30, 30, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .menu-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+      text-decoration: none;
+      color: inherit;
+    }
+    
+    .menu-item i {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      color: var(--primary-orange);
+    }
+    
+    .menu-item h3 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      color: inherit;
+    }
+    
+    .menu-item p {
+      opacity: 0.8;
+      font-size: 0.9rem;
+    }
+    
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: var(--primary-orange);
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      z-index: 100;
+      transition: all 0.3s ease;
+    }
+    
+    .theme-toggle:hover {
+      transform: scale(1.1);
+    }
+    
+    .theme-toggle i {
+      font-size: 1.5rem;
+      color: white;
+    }
+    
+    footer {
+      margin-top: 60px;
+      text-align: center;
+      opacity: 0.7;
+      font-size: 0.9rem;
+      width: 100%;
+    }
+    
+    /* رسپانسیو */
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .menu-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      
+      .menu-item {
+        padding: 25px 15px;
+        min-height: 150px;
+      }
+    }
+
+    .footera {
+      text-decoration: none;
+      color: #F57C00;
+    }
+    
+    /* انیمیشن‌ها */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .menu-item {
+      animation: fadeIn 0.5s ease forwards;
+    }
+    
+    .menu-item:nth-child(1) { animation-delay: 0.1s; }
+    .menu-item:nth-child(2) { animation-delay: 0.2s; }
+    .menu-item:nth-child(3) { animation-delay: 0.3s; }
+    .menu-item:nth-child(4) { animation-delay: 0.4s; }
+    .menu-item:nth-child(5) { animation-delay: 0.5s; }
+  </style>
+  
+  <!-- آیکون‌های فونت آوسام -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- لود کردن اسکریپت اصلی برنامک ایتا -->
+    <script src="https://developer.eitaa.com/eitaa-web-app.js"></script>
+
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle">
+    <i class="fas fa-moon"></i>
+  </button>
+
+  <div class="container">
+    <header>
+      <h1>ابزارهای کاربردی</h1>
+      <p class="subtitle">مجموعه‌ای از ابزارهای مفید ایتا</p>
+    </header>
+    
+    <div class="menu-grid">
+      <a href="/کارت به کارت/" class="menu-item">
+        <i class="fas fa-exchange-alt"></i>
+        <h3>کارت به کارت</h3>
+        <p>ایجاد متن برای انتقال وجه بانکی</p>
+      </a>
+      
+      <a href="/قرعه کشی/" class="menu-item">
+        <i class="fas fa-dice"></i>
+        <h3>قرعه کشی</h3>
+        <p>انتخاب تصادفی از بین اسامی</p>
+      </a>
+      
+      <a href="/هنگ ایموجی/" class="menu-item">
+        <i class="fas fa-smile"></i>
+        <h3>هنگ ایموجی</h3>
+        <p>ساخت زنجیره ایموجی و متن</p>
+      </a>
+      
+      <a href="/سازنده دکمه شیشه‌ای/" class="menu-item">
+        <i class="fas fa-gem"></i>
+        <h3>سازنده دکمه شیشه ای</h3>
+        <p>ساخت دکمه شیشه ای ایتا</p>
+      </a>
+      
+      <a href="" class="menu-item">
+        <i class="fas fa-search-plus"></i>
+        <h3>سازنده جستجوی پیشرفته</h3>
+        <p>به زودی...</p>
+      </a>
+    </div>
+    
+    <footer>
+      ساخته شده توسط کانال ایتافن <b><a class="footera" href="https://eitaa.com/eitaafan">@eitaafan</a></b>
+    </footer>
+  </div>
+
+  <script>
+    // تغییر تم
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
+    const icon = themeToggle.querySelector('i');
+    
+    // بررسی تم اولیه سیستم
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      body.classList.add('dark-mode');
+      icon.classList.remove('fa-moon');
+      icon.classList.add('fa-sun');
+    }
+    
+    themeToggle.addEventListener('click', function() {
+      body.classList.toggle('dark-mode');
+      
+      if (body.classList.contains('dark-mode')) {
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+      } else {
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+      }
+    });
+    
+    // تغییر خودکار تم با تغییر سیستم
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+      if (e.matches) {
+        body.classList.add('dark-mode');
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+      } else {
+        body.classList.remove('dark-mode');
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+      }
+    });
+  </script>
+</body>
+</html>
